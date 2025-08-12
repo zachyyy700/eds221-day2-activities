@@ -50,7 +50,7 @@ ggplot(data = mc_salamanders, aes(x = length1, y = weight)) +
        y = "Weight (g)",
        subtitle = "For Pacific Giant Salamanders (*Dicamptodon tenebrosus*)",
        caption = "Retreived from Gregory, S.V. and I. Arismendi. 2020. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present ver 14. Environmental Data Initiative.") +
-  theme_minimal() +
+  theme_light() +
   theme(
     plot.subtitle = element_markdown(),
     plot.caption = element_text(size = 5.8)
@@ -60,5 +60,28 @@ ggplot(data = mc_salamanders, aes(x = length1, y = weight)) +
 ```{r}
 # export plot
 ggsave(here::here("figs", "salamander_size.png"), height = 6, width = 7)
+```
+
+## Trout Subset
+```{r}
+# filter data
+mc_trout <- dplyr::filter(mack_verts, species == "ONCL")
+```
+
+```{r}
+# plot dih jon
+ggplot(data = mc_trout, aes(x = weight, y = length1, color = reach)) +
+  geom_point(alpha = 0.7) +
+  scale_color_manual(values = c("orange", "black", "yellow")) +
+  facet_wrap(~reach) +
+  labs(title = "Cutthroat Size Comparison",
+       x = "Weight (g)",
+       y = "Length (mm)") +
+  theme_light()
+```
+
+```{r}
+# save plot
+ggsave(here::here("figs", "cutthroat_size.png"), height = 6, width = 7)
 ```
 
