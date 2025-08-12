@@ -1,0 +1,64 @@
+---
+title: "mack_vert_analysis"
+author: "zachyloo"
+format: html
+editor: visual
+execute: 
+  warning: false
+  message: false
+---
+
+## Read data
+```{r}
+library(here)
+library(tidyverse)
+mack_verts <- read_csv(here::here("data", "sal_trout", "AS00601.csv"))
+
+# view
+view(mack_verts)
+```
+
+## Wrangling/Exploring
+```{r}
+# update cols
+library(janitor)
+mack_verts<- mack_verts %>% clean_names()
+```
+
+```{r}
+# individual access practice
+mc_wt_5 <- mack_verts$weight[5]
+mc_length_8_20 <- mack_verts$length1[8:20]
+mc_dates <- as.Date(mack_verts$sampledate)
+```
+
+## Salamder Subset
+```{r}
+# use filter to create salamander subset where species == DITE
+library(dplyr)
+mc_salamanders <- dplyr::filter(mack_verts, species == "DITE")
+```
+
+```{r}
+# plot length vs weight
+library(ggplot2)
+library(ggtext) # for subtitle lol
+ggplot(data = mc_salamanders, aes(x = length1, y = weight)) +
+  geom_point(color = "orange", alpha = 0.5) +
+  labs(title = "Salamander Size vs Weight Plot",
+       x = "Length (mm)",
+       y = "Weight (g)",
+       subtitle = "For Pacific Giant Salamanders (*Dicamptodon tenebrosus*)",
+       caption = "Retreived from Gregory, S.V. and I. Arismendi. 2020. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present ver 14. Environmental Data Initiative.") +
+  theme_minimal() +
+  theme(
+    plot.subtitle = element_markdown(),
+    plot.caption = element_text(size = 5.8)
+  )
+```
+
+```{r}
+# export plot
+ggsave(here::here("figs", "salamander_size.png"), height = 6, width = 7)
+```
+
