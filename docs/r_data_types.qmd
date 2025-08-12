@@ -1,0 +1,62 @@
+---
+title: "r_data_types"
+author: "zachyloo"
+format: html
+editor: visual
+---
+## Vector 1
+```{r}
+# create vector 1
+vec_1 <- c(2, 5, 9, 10, 8, 12, 1, 0)
+```
+
+
+```{r}
+# check vec_1 info
+class(vec_1)
+typeof(vec_1)
+
+# access third element
+vec_1_e3 <- vec_1[3]
+# access first element
+vec_1_e1 <- vec_1[1]
+# access 5th to 7th element , double check this
+vec_1_e5to7 <- vec_1[5:7]
+# reassign to characters
+vec_1_char <- as.character(vec_1)
+
+vec_1_char
+```
+
+## Vector 2
+```{r}
+# create vector 2
+vec_2 <- c(town = "Santa Barbara", location = "Rincon", swell = "south")
+vec_2
+
+# check class
+class(vec_2)
+
+# check length
+length(vec_2)
+
+# access second elemt
+vec_2_e2 <- vec_2[2]
+```
+
+## Create data frame
+```{r}
+df_1 <- data.frame(region = c("A", "B", "A", "D"), 
+                   species = c("otter", "great white", "sea lion", "gray whale"),
+                   count = c(12, 2, 36, 6))
+
+# check df class
+class(df_1)
+
+# check species col class
+class(df_1$species)
+
+# find max val of count col
+max_count <- max(df_1$count)
+```
+
